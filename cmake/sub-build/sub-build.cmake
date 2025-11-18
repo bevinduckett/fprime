@@ -71,16 +71,21 @@ function(run_sub_build SUB_BUILD_NAME)
 
     foreach (TARGET IN LISTS ARGN)
         get_filename_component(TARGET_NAME "${TARGET}" NAME_WE)
-        fprime_cmake_status("[sub-build] Executing: ${SUB_BUILD_NAME} with ${TARGET_NAME}")
-        execute_process_or_fail("[sub-build] Failed to execute: ${SUB_BUILD_NAME}/${TARGET_NAME}"
-            "${CMAKE_COMMAND}"
-            --build
-            "${CMAKE_BINARY_DIR}/sub-build-${SUB_BUILD_NAME}"
-            --target
-            "${TARGET_NAME}"
-            ${BUILD_EXTRA_ARGS}
-            RESULT_VARIABLE result
-        )
+        set (SUB_BUILD_SKIP "SUB_BUILD_SKIP_${TARGET_NAME}")
+        # if(DEFINED ${SUB_BUILD_SKIP})
+        #     message("Not executing ${SUB_BUILD_NAME} with '${TARGET_NAME}' because ${SUB_BUILD_SKIP} is set")
+        # else()
+            fprime_cmake_status("[sub-build] Executing: ${SUB_BUILD_NAME} with ${TARGET_NAME}")
+            execute_process_or_fail("[sub-build] Failed to execute: ${SUB_BUILD_NAME}/${TARGET_NAME}"
+                "${CMAKE_COMMAND}"
+                --build
+                "${CMAKE_BINARY_DIR}/sub-build-${SUB_BUILD_NAME}"
+                --target
+                "${TARGET_NAME}"
+                ${BUILD_EXTRA_ARGS}
+                RESULT_VARIABLE result
+            )
+        # endif()
     endforeach()
     fprime_cmake_status("[sub-build] Performing sub-build: ${SUB_BUILD_NAME} - DONE")
 endfunction(run_sub_build)

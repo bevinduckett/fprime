@@ -49,7 +49,8 @@ function(fpp_to_json_add_module_target MODULE TARGET SOURCES_UNUSED DEPENDENCIES
     set(DELIVERY_DIR "${FPRIME_BINARY_DIR}/${OFFSET}")
     file(MAKE_DIRECTORY "${LOCAL_DIR}")
     file(MAKE_DIRECTORY "${DELIVERY_DIR}")
-    if (FPP_SOURCES)
+    set (MODULE_SKIP "SKIP_FPP_TO_JSON_${MODULE}")
+    if(FPP_SOURCES AND (NOT DEFINED ${MODULE_SKIP}) AND (NOT DEFINED SKIP_FPP_TO_JSON))
         set(OUTPUT_FILES
             "${LOCAL_DIR}/fpp-ast.json"
             "${LOCAL_DIR}/fpp-analysis.json"
@@ -59,6 +60,7 @@ function(fpp_to_json_add_module_target MODULE TARGET SOURCES_UNUSED DEPENDENCIES
             OUTPUT ${OUTPUT_FILES}
             COMMAND ${FPP__INTERNAL_ARGS_FROM_FILE}
                 "${LOCAL_DIR}/fpp-cache/stdout.txt"
+                ${MODULE}
                 "fpp-to-json"
                 ${FPP_SOURCES}
             DEPENDS
