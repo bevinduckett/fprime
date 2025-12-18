@@ -50,7 +50,7 @@ function(locate_fpp_tools)
                         "fpp tools require 'java'. Please install 'java' and ensure it is on your PATH." PARENT_SCOPE
                 )
             else()
-                fprime_cmake_status("[fpp-tools] ${PROGRAM} installed incorrectly.")
+                fprime_cmake_status("[fpp-tools] ${PROGRAM} installed incorrectly, version ${FPP_VERSION} (${OUTPUT_TEXT}) is non-sensical.")
                 set(FPP_REINSTALL_ERROR_MESSAGE "fpp tools installed incorrectly." PARENT_SCOPE)
             endif()
         else()
