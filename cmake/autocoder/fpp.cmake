@@ -8,6 +8,7 @@ include_guard()
 include(utilities)
 include(autocoder/helpers)
 set(FPRIME_FPP_TO_DICT_WRAPPER "${CMAKE_CURRENT_LIST_DIR}/scripts/fpp_to_dict_wrapper.py" CACHE INTERNAL "Internal path to fpp_to_dict_wrapper.py" FORCE)
+set(FPRIME_FPP_STRIP_OVERRIDE "${CMAKE_CURRENT_LIST_DIR}/scripts/fpp_strip_override.py" CACHE INTERNAL "Internal path to fpp_strip_override.py" FORCE)
 
 autocoder_setup_for_multiple_sources()
 ####
@@ -236,6 +237,7 @@ function(fpp_setup_autocode MODULE_NAME AC_INPUT_FILES)
                 OUTPUT ${GENERATED_CPP}
                 COMMAND ${FPP_TO_CPP} "-d" "${CMAKE_CURRENT_BINARY_DIR_RESOLVED}" ${IMPORTS} ${AC_INPUT_FILES}
                     "-p" "${FPRIME_BUILD_LOCATIONS_COMMA_SEP},${CMAKE_BINARY_DIR_RESOLVED}"
+                COMMAND ${PYTHON} ${FPRIME_FPP_STRIP_OVERRIDE} ${GENERATED_CPP}
                 DEPENDS ${FILE_DEPENDENCIES}
         )
     endif()

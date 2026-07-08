@@ -4,16 +4,23 @@
 namespace Fw {
 
 ParamBuffer::ParamBuffer(const U8* args, FwSizeType size) {
+    this->m_buffAddr = this->m_bufferData;
+    this->m_capacity = sizeof(this->m_bufferData);
     SerializeStatus stat = LinearBufferBase::setBuff(args, size);
     FW_ASSERT(FW_SERIALIZE_OK == stat, static_cast<FwAssertArgType>(stat));
 }
 
-ParamBuffer::ParamBuffer() {}
+ParamBuffer::ParamBuffer() {
+    this->m_buffAddr = this->m_bufferData;
+    this->m_capacity = sizeof(this->m_bufferData);
+}
 
 ParamBuffer::~ParamBuffer() {}
 
 ParamBuffer::ParamBuffer(const ParamBuffer& other) : Fw::LinearBufferBase() {
-    SerializeStatus stat = LinearBufferBase::setBuff(other.m_bufferData, other.getSize());
+    this->m_buffAddr = this->m_bufferData;
+    this->m_capacity = sizeof(this->m_bufferData);
+    SerializeStatus stat = LinearBufferBase::setBuff(other.m_bufferData, other.m_serLoc);
     FW_ASSERT(FW_SERIALIZE_OK == stat, static_cast<FwAssertArgType>(stat));
 }
 
@@ -22,25 +29,13 @@ ParamBuffer& ParamBuffer::operator=(const ParamBuffer& other) {
         return *this;
     }
 
-    SerializeStatus stat = LinearBufferBase::setBuff(other.m_bufferData, other.getSize());
+    SerializeStatus stat = LinearBufferBase::setBuff(other.m_bufferData, other.m_serLoc);
     FW_ASSERT(FW_SERIALIZE_OK == stat, static_cast<FwAssertArgType>(stat));
     return *this;
 }
 
-FwSizeType ParamBuffer::getCapacity() const {
-    return sizeof(this->m_bufferData);
-}
-
 FwSizeType ParamBuffer::getBuffCapacity() const {
     return this->getCapacity();
-}
-
-const U8* ParamBuffer::getBuffAddr() const {
-    return this->m_bufferData;
-}
-
-U8* ParamBuffer::getBuffAddr() {
-    return this->m_bufferData;
 }
 
 }  // namespace Fw

@@ -27,10 +27,6 @@ class TlmBuffer final : public LinearBufferBase {
     TlmBuffer& operator=(const TlmBuffer& other);
 
     DEPRECATED(FwSizeType getBuffCapacity() const, "Use getCapacity() instead");
-    FwSizeType getCapacity() const;  // !< returns capacity, not current size, of buffer
-
-    U8* getBuffAddr();
-    const U8* getBuffAddr() const;
 
   private:
     U8 m_bufferData[FW_TLM_BUFFER_MAX_SIZE];  // command argument buffer

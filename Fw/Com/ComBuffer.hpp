@@ -30,10 +30,6 @@ class ComBuffer final : public LinearBufferBase {
     ComBuffer& operator=(const ComBuffer& other);
 
     DEPRECATED(FwSizeType getBuffCapacity() const, "Use getCapacity() instead");
-    FwSizeType getCapacity() const;  // !< returns capacity, not current size, of buffer
-
-    U8* getBuffAddr();
-    const U8* getBuffAddr() const;
 
   private:
     U8 m_bufferData[FW_COM_BUFFER_MAX_SIZE];  // packet data buffer

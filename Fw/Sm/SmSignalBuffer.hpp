@@ -27,10 +27,6 @@ class SmSignalBuffer final : public LinearBufferBase {
 
     DEPRECATED(Serializable::SizeType getBuffCapacity() const, "Use getCapacity() instead");
     Serializable::SizeType getCapacity() const;  // !< returns capacity, not current size, of buffer
-
-    U8* getBuffAddr();
-    const U8* getBuffAddr() const;
-
   private:
     U8 m_bufferData[FW_SM_SIGNAL_BUFFER_MAX_SIZE];  // packet data buffer
 };

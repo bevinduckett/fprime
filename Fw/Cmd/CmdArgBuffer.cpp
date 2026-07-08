@@ -4,16 +4,23 @@
 namespace Fw {
 
 CmdArgBuffer::CmdArgBuffer(const U8* args, FwSizeType size) {
+    this->m_buffAddr = this->m_bufferData;
+    this->m_capacity = sizeof(this->m_bufferData);
     SerializeStatus stat = this->setBuff(args, size);
     FW_ASSERT(FW_SERIALIZE_OK == stat, static_cast<FwAssertArgType>(stat));
 }
 
-CmdArgBuffer::CmdArgBuffer() {}
+CmdArgBuffer::CmdArgBuffer() {
+    this->m_buffAddr = this->m_bufferData;
+    this->m_capacity = sizeof(this->m_bufferData);
+}
 
 CmdArgBuffer::~CmdArgBuffer() {}
 
 CmdArgBuffer::CmdArgBuffer(const CmdArgBuffer& other) : Fw::LinearBufferBase() {
-    SerializeStatus stat = this->setBuff(other.m_bufferData, other.getSize());
+    this->m_buffAddr = this->m_bufferData;
+    this->m_capacity = sizeof(this->m_bufferData);
+    SerializeStatus stat = this->setBuff(other.m_bufferData, other.m_serLoc);
     FW_ASSERT(FW_SERIALIZE_OK == stat, static_cast<FwAssertArgType>(stat));
 }
 
@@ -22,25 +29,13 @@ CmdArgBuffer& CmdArgBuffer::operator=(const CmdArgBuffer& other) {
         return *this;
     }
 
-    SerializeStatus stat = this->setBuff(other.m_bufferData, other.getSize());
+    SerializeStatus stat = this->setBuff(other.m_bufferData, other.m_serLoc);
     FW_ASSERT(FW_SERIALIZE_OK == stat, static_cast<FwAssertArgType>(stat));
     return *this;
 }
 
-FwSizeType CmdArgBuffer::getCapacity() const {
-    return sizeof(this->m_bufferData);
-}
-
 FwSizeType CmdArgBuffer::getBuffCapacity() const {
     return this->getCapacity();
-}
-
-const U8* CmdArgBuffer::getBuffAddr() const {
-    return this->m_bufferData;
-}
-
-U8* CmdArgBuffer::getBuffAddr() {
-    return this->m_bufferData;
 }
 
 }  // namespace Fw
