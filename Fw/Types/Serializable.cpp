@@ -792,7 +792,7 @@ ALWAYS_INLINE const U8* LinearBufferBase::getBuffAddrLeft() const {
 }
 
 //!< gets address of end of serialization. Used to manually place data at the end
-ALWAYS_INLINEU8* LinearBufferBase::getBuffAddrSer() {
+ALWAYS_INLINE U8* LinearBufferBase::getBuffAddrSer() {
     FW_ASSERT(this->m_buffAddr);
     return &this->m_buffAddr[this->m_serLoc];
 }
