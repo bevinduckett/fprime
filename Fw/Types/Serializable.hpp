@@ -8,6 +8,14 @@
 #include <Fw/FPrimeBasicTypes.hpp>
 #include "Fw/Deprecate.hpp"
 
+// Some macros/functions to optimize for architectures
+// FIXME: Rename (maybe) and move to FpConfig.h
+#if defined(__GNUC__) || defined(__clang__)
+#define ALWAYS_INLINE __attribute__((always_inline)) inline
+#else
+#define ALWAYS_INLINE
+#endif
+
 namespace Fw {
 
 class StringBase;  //!< forward declaration for string
@@ -1161,7 +1169,7 @@ class LinearBufferBase : public SerialBufferBase {
     //! the current size, which indicates how much data is currently in the buffer.
     //!
     //! \return The capacity of the buffer in bytes
-    Serializable::SizeType getCapacity() const override = 0;
+    ALWAYS_INLINE Serializable::SizeType getCapacity() const override = 0;
 
     //! \brief Get current buffer size
     //!
@@ -1198,7 +1206,7 @@ class LinearBufferBase : public SerialBufferBase {
     //! buffer contents to be modified.
     //!
     //! \return Pointer to the buffer's data area
-    virtual U8* getBuffAddr() = 0;
+    ALWAYS_INLINE virtual U8* getBuffAddr() = 0;
 
     //! \brief Get buffer address for data reading (const version)
     //!
@@ -1207,7 +1215,7 @@ class LinearBufferBase : public SerialBufferBase {
     //! of the buffer contents.
     //!
     //! \return Const pointer to the buffer's data area
-    virtual const U8* getBuffAddr() const = 0;
+    ALWAYS_INLINE virtual const U8* getBuffAddr() const = 0;
 
     //! \brief Get address of remaining non-deserialized data
     //!
