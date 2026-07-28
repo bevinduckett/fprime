@@ -15,6 +15,7 @@ add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/TypeDemo/")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/DpDemo/")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/BlockDriver/")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Top/")
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/config-ref/")
 
 register_fprime_deployment(
     SOURCES
