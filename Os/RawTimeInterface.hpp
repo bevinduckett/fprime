@@ -112,10 +112,10 @@ class RawTimeInterface : public Fw::Serializable {
     //! \param other The other RawTime object to compare against.
     //! \param result A reference to a U32 variable where the result will be stored.
     //! \return Status indicating the result of the operation.
-    virtual Status getDiffUsec(const RawTime& other, U32& result) const;
+    Status getDiffUsec(const RawTime& other, U32& result) const;
 
     //! \brief Compare whether two RawTime objects are the same (i.e. refer to the same microsecond)
-    virtual bool operator==(const RawTime& other) const;
+    bool operator==(const RawTime& other) const;
 };
 }  // namespace Os
 

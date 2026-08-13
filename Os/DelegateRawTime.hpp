@@ -90,14 +90,14 @@ class DelegateRawTime final : public RawTimeInterface {
     //! \param other The other RawTime object to compare against.
     //! \param result A reference to a U32 variable where the result will be stored.
     //! \return Status indicating the result of the operation.
-    Status getDiffUsec(const RawTime& other, U32& result) const override;
+    Status getDiffUsec(const RawTime& other, U32& result) const;
 
     // ------------------------------------------------------------
     // Common functions built on top of OS-specific functions
     // ------------------------------------------------------------
 
     //! \brief Compare whether two RawTime objects are the same (i.e. refer to the same microsecond)
-    bool operator==(const RawTime& other) const override;
+    bool operator==(const RawTime& other) const;
 
   private:
     // This section is used to store the implementation-defined RawTime handle. To Os::RawTime and fprime, this type is
